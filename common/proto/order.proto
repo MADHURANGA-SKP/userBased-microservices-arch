@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "common/proto/";
+
+package api;
+
+message Order {
+    int64 OrderID = 1;
+    string UserID = 2;
+    string Status = 3;
+    repeated Item Items = 4;
+    string PaymentLink = 5;
+}
+
+service OrderService {
+    rpc CreateOrder(CreateOrderRequest) returns (Order);
+    rpc GetOrder(GetOrderRequest) returns (Order);
+    rpc UpdateOrder(Order) returns (Order);
+}
+
+message GetOrderRequest {
+    int64 UserID = 1;
+}
+
+message CreateOrderRequest {
+    string UserID = 1;
+    repeated ItemsWithQuantity Items = 2;
+}
