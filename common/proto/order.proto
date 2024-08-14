@@ -6,7 +6,7 @@ package api;
 
 message Order {
     int64 OrderID = 1;
-    string UserID = 2;
+    int64 UserID = 2;
     string Status = 3;
     repeated Item Items = 4;
     string PaymentLink = 5;

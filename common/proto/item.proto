@@ -6,7 +6,7 @@ package api;
 
 message Item {
     int64 ItemID = 1;
-    string IteemName = 2;
+    string ItemName = 2;
     int32 Quantity = 3;
     string PriceID = 4;
 }
