@@ -16,3 +16,19 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2323583ksP
+      - POSTGRES_DB=sharedDB
+      - DB_SOURCE=postgresql://postgres:2323583ksP@postgres:5432?sslmode=disable
+    ports:
+      - "5432:5432"
+    volumes:
+      - data-volume:/var/lib/postgresql/data
+      - ./db/migrations:/app/db/migrations
+  redis:
+    image: redis:7-alpine
+volumes:
+  data-volume:

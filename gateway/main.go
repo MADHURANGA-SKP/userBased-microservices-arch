@@ -8,16 +8,17 @@ import (
 	"context"
 	"gateway/gateway"
 	"log"
-	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main(){
-	config, err := util.LoadConfig(".")
+	config, err := util.LoadConfig("..")
 	if err != nil {
 		log.Fatal(err)
 	}
-
+ 
 	err = common.SetGlobalTracer(context.TODO(), config.ServiceGateway, config.JeagerAddr)
 	if err != nil {
 		log.Fatal(err)
@@ -45,17 +46,18 @@ func main(){
 
 	defer registry.DeRegister(ctx, instanceID, config.ServiceGateway)
 
-	mux := http.NewServeMux()
+	router := gin.Default()
 
-	OMSGateway := gateway.NewGRPCGateway(registry)
+	OMSGateway := gateway.NewGRPCGateway(registry, config)
 
 	handler := NewHandler(OMSGateway)
 
-	handler.registerRoutes(mux)
+	handler.registerRoutes(router)
 
-	log.Printf("stating http server at %s", config.HttpAddr)
+	log.Printf("Starting HTTP server at %s", config.HttpAddr)
 
-	if err := http.ListenAndServe(config.HttpAddr, mux); err != nil {
-		log.Fatalf("failed to start http server at %s:", config.ConsulAddr)
+	// Start the Gin server
+	if err := router.Run(config.HttpAddr); err != nil {
+		log.Fatal("Failed to start HTTP server")
 	}
 }

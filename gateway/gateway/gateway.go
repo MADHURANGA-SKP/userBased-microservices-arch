@@ -6,7 +6,7 @@ import (
 )
 
 type OMSGateway interface {
-	CreateUser(ctx context.Context, p *pb.CreateUserRequest)(*pb.User, error)
+	CreateUser(ctx context.Context, p *pb.CreateUserRequest)(*pb.CreateUserResponse, error)
 	// GetUser()
 	// UpdateUser()
 

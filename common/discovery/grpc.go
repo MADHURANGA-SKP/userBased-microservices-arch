@@ -23,7 +23,7 @@ func ServiceConnection(
 	if err != nil {
 		return nil, err
 	}
-
+	
 	log.Printf("Discovered %d instance of %s", len(addr), serviceName)
 
 	//Randomly select an instance

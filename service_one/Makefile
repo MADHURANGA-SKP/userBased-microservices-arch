@@ -1,10 +1,10 @@
-DB_URL = postgresql://pasan:12345@localhost:5432/sharedDB?sslmode=disable
+DB_URL	=	postgresql://pasan:2323583ksP@localhost:5432/sharedDB?sslmode=disable
 
 postgres:
-	docker run -d --name sharedDB -p 5432:5432 -e POSTGRES_USER=pasan -e POSTGRES_PASSWORD=12345 postgres:16-alpine
+	docker run -d --name sharedDB -p 5432:5432 -e POSTGRES_USER=pasan -e POSTGRES_PASSWORD=2323583ksP postgres:16-alpine
 
 createdb:
-	docker exec -it sharedDB createdb --username=pasan --owner=pasan sharedDB
+	docker exec -it microservice-based-postgres-crud_postgres_1 createdb --username=pasan --owner=pasan sharedDB
 
 migrate:
 	migrate create -ext sql -dir db/migrations -seq init_mg
@@ -14,7 +14,6 @@ dropdb:
 
 migrateup:
 	migrate -path db/migrations -database "$(DB_URL)" -verbose up
-
 
 migratedown:
 	migrate -path db/migrations -database "$(DB_URL)" -verbose down
