@@ -21,11 +21,13 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=2323583ksP
-      - POSTGRES_DB=eduapp_db
+      - POSTGRES_DB=sharedDB
+      - DB_SOURCE=postgresql://postgres:2323583ksP@postgres:5432?sslmode=disable
     ports:
       - "5432:5432"
     volumes:
       - data-volume:/var/lib/postgresql/data
+      - ./db/migrations:/app/db/migrations
   redis:
     image: redis:7-alpine
 volumes:

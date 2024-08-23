@@ -13,10 +13,22 @@ message User {
     string Password = 6;
 }
 
+message CreateUserResponse {
+    User user = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+message UpdateUserResponse {
+    User user = 1;
+}
+
 service UserService {
-    rpc CreateUser(CreateUserRequest) returns (User);
-    rpc GetUser(GetUserRequest) returns (User);
-    rpc UpdateUser(User) returns (User);
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+    rpc GetUser(GetUserRequest) returns (GetUserResponse);
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
 }
 
 message GetUserRequest {
@@ -24,6 +36,14 @@ message GetUserRequest {
 }
 
 message CreateUserRequest {
+    string FirstName = 1;
+    string LastName = 2;
+    string Email = 3;
+    string UserName = 4;
+    string Password = 5;
+}
+
+message UpdateUserRequest {
     string FirstName = 1;
     string LastName = 2;
     string Email = 3;

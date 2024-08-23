@@ -1,20 +1,21 @@
 package common
 
 import (
-	"encoding/json"
-	"net/http"
+	"github.com/gin-gonic/gin"
 )
 
-func WriteJSON(w http.ResponseWriter, status int, data any) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(data)
+func WriteJSON(ctx *gin.Context, status int, data any) {
+	ctx.JSON(status, data)
 }
 
-func ReadJSON(r *http.Request, data any) error {
-	return json.NewDecoder(r.Body).Decode(data)
+func ReadJSON(ctx *gin.Context, data any) error {
+	if err := ctx.ShouldBindJSON(&data); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func WriteError(w http.ResponseWriter, status int, message string){
-	WriteJSON(w, status, map[string]string{"Error":message})
+func WriteError(ctx *gin.Context, status int, message string){
+	WriteJSON(ctx, status, gin.H{"error":message})
 }

@@ -16,7 +16,7 @@ const (
 )
 
 func Connect(user, password, host, port string) (*ampq.Channel, func() error){
-	address := fmt.Sprintf("ampq://%s:%s@%s:%s", user, password, host, port)
+	address := fmt.Sprintf("amqp://%s:%s@%s:%s", user, password, host, port)
 
 	conn, err := ampq.Dial(address)
 	if err != nil {
